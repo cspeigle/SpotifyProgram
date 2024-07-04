@@ -12,8 +12,6 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                client_secret=client_secret,
                                                redirect_uri=redirect_uri,
                                                scope=scope))
-
-
 DumpList = 'SpotipySecondary'
 playlist_name = 'SpotipyPrimary'
 song_names = ["Brazil", "Hello","Goodbye","Greetings"]
@@ -162,4 +160,4 @@ print (SecondaryPlaylist_id)
 # Add the track to the playlist 
 add_songs_to_playlist(PrimaryPlaylist_id, song_names)
 
-SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, song_name)
+//SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, song_name)
