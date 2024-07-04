@@ -1,27 +1,21 @@
 import spotipy
-import config
+import help
 from spotipy.oauth2 import SpotifyOAuth
 
 # Authentication scope
 scope = 'playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public'
 
 # Authentication and authorization
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=config.client_id,
-                                               client_secret=config.client_secret ,
-                                               redirect_uri=config.redirect_uri ,
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=help.client_id,
+                                               client_secret= help.client_secret ,
+                                               redirect_uri= help.redirect_uri ,
                                                scope=scope))
-DumpList = 'SpotipySecondary'
-playlist_name = 'SpotipyPrimary'
-
-
+archive_playlist_name = input("Enter the name for the archive playlist: ")
+primary_playlist_name = input("Enter the name for the primary playlist: ")
+selected_songs_playlist_name = input("Enter the name for the selected songs playlist: ")
 song_names = ["Brazil", "Hello","Goodbye","Greetings"]
 song_name = "Hello"
 #input("Enter song name")
-
-
-       
-
-#Function Definitions
 def display_playlist_tracks(playlist_name):
     user_id = sp.me()['id']  # Get the current user's ID
     playlists = sp.user_playlists(user_id)
@@ -43,13 +37,9 @@ def display_playlist_tracks(playlist_name):
         track = item['track']
         print(f"{idx+1}. {track['name']} by {', '.join([artist['name'] for artist in track['artists']])}")
 
-
-'''
 # Example usage:
 playlist_name = 'SpotipyPrimary'
 display_playlist_tracks(playlist_name)
-'''
-
 
 
 def create_playlist_if_not_exists(playlist_name):
@@ -67,10 +57,7 @@ def create_playlist_if_not_exists(playlist_name):
     playlist = sp.user_playlist_create(user=user_id, name=playlist_name, public=True)
     print('Playlist Created')
     return playlist['id']
-                
-            
-
-
+    
 # Function to search for a song and return its track ID
 def get_track_id(song_name):
     trackids = []
@@ -104,8 +91,6 @@ def add_songs_to_playlist(playlist_id, song_names):
             print(f"Skipping adding '{song_name}' to the playlist because no track ID was found.")
 
 
-
-
 def SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, song_name):
     # Get the IDs of the primary and secondary playlists 
     if PrimaryPlaylist_id is None or SecondaryPlaylist_id is None:
@@ -131,17 +116,29 @@ def SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, son
     print(f"Song '{song_name}' transferred from '{PrimaryPlaylist_id}' to '{SecondaryPlaylist_id}'.")
 
 
+
 #Function Calls 
-PrimaryPlaylist_id = create_playlist_if_not_exists(playlist_name)
-print (PrimaryPlaylist_id)
+# Create or get playlist IDs
+playlist_names = {
+    'archive': archive_playlist_name,
+    'primary': primary_playlist_name,
+    'selected': selected_songs_playlist_name
+}
+
+playlist_ids = {}
+for key, name in playlist_names.items():
+    playlist_ids[key] = create_playlist_if_not_exists(name)
+
+print (name)
 track_id = get_track_id(song_names)
 print (track_id)
 
 
-SecondaryPlaylist_id = create_playlist_if_not_exists(DumpList)
-print (SecondaryPlaylist_id)
+# Display tracks in primary playlist
+display_playlist_tracks(primary_playlist_name)
 
-# Add the track to the playlist 
-add_songs_to_playlist(PrimaryPlaylist_id, song_names)
+# Add songs to primary playlist
+add_songs_to_playlist(playlist_ids['primary'], song_names)
 
-SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, song_name)
+# Transfer a song from primary to secondary playlist
+SongTransferPrimaryToSecondary(playlist_ids['primary'], playlist_ids['archive'], song_name)
