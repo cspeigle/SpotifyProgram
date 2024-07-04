@@ -1,15 +1,14 @@
 import spotipy
+import config
 from spotipy.oauth2 import SpotifyOAuth
-
-# Spotify API credentials
 
 # Authentication scope
 scope = 'playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public'
 
 # Authentication and authorization
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
-                                               client_secret=client_secret,
-                                               redirect_uri=redirect_uri,
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=config.client_id,
+                                               client_secret=config.client_secret ,
+                                               redirect_uri=config.redirect_uri ,
                                                scope=scope))
 DumpList = 'SpotipySecondary'
 playlist_name = 'SpotipyPrimary'
