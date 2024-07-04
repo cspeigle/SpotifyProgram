@@ -1,0 +1,30 @@
+Goals -- 
+07/04/2024
+
+Create 3 lists (Keep, discard, current)
+Analyze user value outputing best universal outcome 
+*add_songs_to_playlist checks agains ALL songs 
+*add third playlist creation 
+*adjust SongTransferPrimaryToSecondary to work with 3 playlists 
+*add third and fourth playlist names
+*
+
+Features -- 
+deny repeat songs 
+User to current branches to keep or discard 
+*pull from a user specific playlist to add to current playlist 
+
+
+
+
+
+
+
+
+
+Functions --
+display_playlist_tracks - Displays all songs in playlist
+create_playlist_if_not_exists - initial function that creats the 3 lists
+get_track_id - searches for a song outputs its track ID
+add_songs_to_playlist - adds songs to playlist, denys repeat songs for the specified playlist
+SongTransferPrimaryToSecondary - 
