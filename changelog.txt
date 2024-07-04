@@ -3,10 +3,13 @@ Goals --
 
 Create 3 lists (Keep, discard, current)
 Analyze user value outputing best universal outcome 
-*add_songs_to_playlist checks agains ALL songs 
+*pending* add_songs_to_playlist checks agains ALL songs 
+
 *add third playlist creation 
-*adjust SongTransferPrimaryToSecondary to work with 3 playlists 
 *add third and fourth playlist names
+
+*adjust SongTransferPrimaryToSecondary to work with 3 playlists 
+
 *
 
 Features -- 
