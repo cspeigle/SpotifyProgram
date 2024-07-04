@@ -1,40 +1,25 @@
 import spotipy
+import config
 from spotipy.oauth2 import SpotifyOAuth
-
-# Spotify API credentials
-
 
 # Authentication scope
 scope = 'playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public'
 
 # Authentication and authorization
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
-                                               client_secret=client_secret,
-                                               redirect_uri=redirect_uri,
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=config.client_id,
+                                               client_secret=config.client_secret ,
+                                               redirect_uri=config.redirect_uri ,
                                                scope=scope))
 DumpList = 'SpotipySecondary'
 playlist_name = 'SpotipyPrimary'
+
+
 song_names = ["Brazil", "Hello","Goodbye","Greetings"]
 song_name = "Hello"
 #input("Enter song name")
 
 
        
-
-
-       
-
-
-
-
-
-
-
-
-
-
-
-
 
 #Function Definitions
 def display_playlist_tracks(playlist_name):
@@ -58,9 +43,13 @@ def display_playlist_tracks(playlist_name):
         track = item['track']
         print(f"{idx+1}. {track['name']} by {', '.join([artist['name'] for artist in track['artists']])}")
 
+
+'''
 # Example usage:
 playlist_name = 'SpotipyPrimary'
 display_playlist_tracks(playlist_name)
+'''
+
 
 
 def create_playlist_if_not_exists(playlist_name):
@@ -117,10 +106,6 @@ def add_songs_to_playlist(playlist_id, song_names):
 
 
 
-
-
-
-
 def SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, song_name):
     # Get the IDs of the primary and secondary playlists 
     if PrimaryPlaylist_id is None or SecondaryPlaylist_id is None:
@@ -146,7 +131,6 @@ def SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, son
     print(f"Song '{song_name}' transferred from '{PrimaryPlaylist_id}' to '{SecondaryPlaylist_id}'.")
 
 
-
 #Function Calls 
 PrimaryPlaylist_id = create_playlist_if_not_exists(playlist_name)
 print (PrimaryPlaylist_id)
@@ -160,4 +144,4 @@ print (SecondaryPlaylist_id)
 # Add the track to the playlist 
 add_songs_to_playlist(PrimaryPlaylist_id, song_names)
 
-//SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, song_name)
+SongTransferPrimaryToSecondary(PrimaryPlaylist_id, SecondaryPlaylist_id, song_name)
